@@ -123,8 +123,8 @@ for i, (cImg, sImg, imname) in enumerate(loader):
       logprinter("Processing stage 3"); cImg = styleTransfer(wct.e3, wct.d3, cImg, sImg, csF)
       logprinter("Processing stage 2"); cImg = styleTransfer(wct.e2, wct.d2, cImg, sImg, csF)
       logprinter("Processing stage 1"); cImg = styleTransfer(wct.e1, wct.d1, cImg, sImg, csF)
-    
-    out_path = os.path.join(args.outf, "%s_mode=%s_alpha=%s_%s" % (args.log_mark, args.mode, args.alpha, imname))
+    file_name = "{}".format(imname)
+    out_path = os.path.join(args.outf, file_name)
     vutils.save_image(cImg.data.cpu(), out_path)
     end_time = time.time()
     avgTime += (end_time - start_time)
