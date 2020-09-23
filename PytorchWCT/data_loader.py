@@ -56,7 +56,7 @@ class Dataset(data.Dataset):
         contentImg = transforms.ToTensor()(contentImg)
         styleImg = transforms.ToTensor()(styleImg)
         return contentImg.squeeze(0), styleImg.squeeze(0), \
-               self.content_image_list[index].split(".")[0] + "+" + self.style_image_list[index].split(".")[0] + ".jpg"
+               self.content_image_list[index].split(".")[0] + "_" + self.style_image_list[index].split(".")[0] + ".jpg"
       
       else: # texture synthesis
         textureImgPath = os.path.join(self.texturePath, self.texture_image_list[index])
