@@ -55,8 +55,11 @@ class Dataset(data.Dataset):
           styleImg = transforms.Resize(self.style_size)(styleImg)
         contentImg = transforms.ToTensor()(contentImg)
         styleImg = transforms.ToTensor()(styleImg)
-        return contentImg.squeeze(0), styleImg.squeeze(0), \
-               self.content_image_list[index].split(".")[0] + "_" + self.style_image_list[index].split(".")[0] + ".jpg"
+        
+        # imname = self.content_image_list[index].split(".")[0] + "_" + self.style_image_list[index].split(".")[0] + ".jpg"
+        imname = self.content_image_list[index].split(".")[0] + ".png"
+        return contentImg.squeeze(0), styleImg.squeeze(0), imname
+               
       
       else: # texture synthesis
         textureImgPath = os.path.join(self.texturePath, self.texture_image_list[index])
@@ -71,8 +74,8 @@ class Dataset(data.Dataset):
             neww = int(w * newh / h)
           textureImg = textureImg.resize((neww,newh))
         w, h = textureImg.size
-        contentImg = torch.rand_like(textureImg)
         textureImg = transforms.ToTensor()(textureImg)
+        contentImg = torch.rand_like(textureImg)
         return contentImg.squeeze(0), textureImg.squeeze(0), self.texture_image_list[index].split(".")[0] + ".jpg"
 
     def __len__(self):
