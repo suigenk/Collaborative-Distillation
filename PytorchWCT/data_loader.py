@@ -18,11 +18,12 @@ def default_loader(path):
     return Image.open(path).convert('RGB')
 
 class Dataset(data.Dataset):
-    def __init__(self, contentPath, stylePath, texturePath, c_size=0, s_size=0, picked_content_mark=".", picked_style_mark=".", synthesis=False):
+    def __init__(self, contentPath, stylePath, texturePath, c_size=0, s_size=0, picked_content_mark=".", picked_style_mark=".", synthesis=False, debug=False):
       super(Dataset,self).__init__()
       self.content_size = c_size
       self.style_size = s_size
       self.synthesis = synthesis
+      self.debug = debug
       if synthesis:
         self.texturePath = texturePath
         self.texture_image_list = [x for x in listdir(texturePath) if is_image_file(x)]
@@ -34,14 +35,11 @@ class Dataset(data.Dataset):
         pairs = [[c, s] for c in content_imgs for s in style_imgs]
         self.content_image_list = list(np.array(pairs)[:, 0])
         self.style_image_list = list(np.array(pairs)[:, 1])
-      
-      # self.normalize = transforms.Normalize(mean=[103.939,116.779,123.68],std=[1, 1, 1])
-      # normalize = transforms.Normalize(mean=[123.68,103.939,116.779],std=[1, 1, 1])
-      # self.prep = transforms.Compose([
-                  # transforms.Scale(fineSize),
-                  # transforms.ToTensor(),
-                  # #transforms.Lambda(lambda x: x[torch.LongTensor([2,1,0])]), #turn to BGR
-                  # ])
+
+        if self.debug:
+          self.content_image_list = self.content_image_list[:5]
+
+        print("# of images", len(self.content_image_list))
 
     def __getitem__(self, index):
       if not self.synthesis: # style transfer

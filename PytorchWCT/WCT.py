@@ -88,7 +88,7 @@ logprinter(args._get_kwargs())
 contentPath = args.UHD_contentPath if args.UHD else args.contentPath
 stylePath = args.UHD_stylePath if args.UHD else args.stylePath
 dataset = Dataset(contentPath, stylePath, args.texturePath, args.content_size, args.style_size,
-    args.picked_content_mark, args.picked_style_mark, args.synthesis)
+    args.picked_content_mark, args.picked_style_mark, args.synthesis, args.debug)
 loader = torch.utils.data.DataLoader(dataset=dataset,
                                      batch_size=1,
                                      shuffle=False)
