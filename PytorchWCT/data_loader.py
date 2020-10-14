@@ -54,7 +54,6 @@ class Dataset(data.Dataset):
         contentImg = transforms.ToTensor()(contentImg)
         styleImg = transforms.ToTensor()(styleImg)
         
-        # imname = self.content_image_list[index].split(".")[0] + "_" + self.style_image_list[index].split(".")[0] + ".jpg"
         imname = self.content_image_list[index].split(".")[0] + ".png"
         return contentImg.squeeze(0), styleImg.squeeze(0), imname
                
